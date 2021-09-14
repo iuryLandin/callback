@@ -77,6 +77,19 @@ app.get("/logs/:filename", (req, res, next) => {
 });
 
 
+app.delete("/remove/:filename", (req, res, next) => {
+    try {
+        const directoryPath = path.join(__dirname, 'logs');
+
+        var file = fs.readFileSync(directoryPath + '/' + req.params.filename)
+
+        res.send({ ok: true, file })
+
+    } catch (e) {
+        res.status(400).send({ ok: false, error: e.toString(), stack: e })
+    }
+});
+
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");
